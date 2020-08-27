@@ -2,7 +2,7 @@ GO111MODULE=on
 BINARY_NAME=nats-logger
 BINARY_NAME_CROSS_LINUX=nats-logger
 RIMRAF=rm -rf
-PACKAGE_NAME=go.sirus.dev/sirus-rnd/nats-logger
+PACKAGE_NAME=go.sirus.dev/nats-logger
 
 # setup OS variables
 ifeq ($(OS), Windows_NT)
@@ -34,9 +34,6 @@ lint:
 test:
 	ginkgo -cover -outputdir=./coverage ./...
 
-mock:
-	mockgen -destination pkg/linimasa/mock/edge_central.go go.sirus.dev/sirus-rnd/nats-logger/pkg/linimasa IEdgeCentral
-
 merge-coverage:
 	@for f in `find . -name \*.coverprofile`; do tail -n +2 $$f >>_total; done
 	@echo 'mode: atomic' >total.coverprofile
@@ -50,7 +47,6 @@ build-cross-linux:
 install-dependency:
 	go get -v github.com/mgechev/revive
 	go get -v github.com/onsi/ginkgo/ginkgo
-	go get -v github.com/golang/mock/mockgen@v1.4.3
 	go mod tidy
 
 clean:

@@ -20,7 +20,7 @@ _total
 *.so
 *.dylib
 *.tmp
-cloud-central
+nats-logger
 e2e.*
 
 # System Files

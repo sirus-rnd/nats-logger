@@ -7,6 +7,6 @@ WORKDIR /root
 RUN apk update && apk add tzdata ca-certificates && rm -rf /var/cache/apk/*
 
 # copy binary file
-COPY booking /root
+COPY nats-logger /root
 
-ENTRYPOINT [ "/root/booking" ]
+ENTRYPOINT [ "/root/nats-logger" ]

@@ -1,0 +1,33 @@
+name: prod
+
+on:
+  push:
+    branches: [master]
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    env:
+      BUILT_IMAGE: "docker.pkg.github.com/${{ github.repository }}/nats-logger:${{ github.sha }}"
+    steps:
+      - uses: actions/setup-go@v2
+        with:
+          go-version: ^1.13
+        id: go
+      - uses: actions/checkout@v2
+      - run: make init
+      - run: sed -i "s/--build-sha--/$GITHUB_SHA/g" cmd/version.go
+      - run: make build-cross-linux
+      - uses: actions/upload-artifact@v1
+        with:
+          name: binary
+          path: nats-logger
+      - uses: docker/build-push-action@v1
+        with:
+          repository: ${{ github.repository }}/nats-logger
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          tag_with_ref: true
+          tags: latest,${{ github.sha }}

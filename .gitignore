@@ -1,0 +1,41 @@
+# compiled output
+*.out
+*.test
+dist
+tmp
+build
+bindata.go
+*.coverprofile
+coverage.txt
+_total
+
+# IDE
+.vscode
+.idea
+
+# binary
+*.bin
+*.exe
+*.dll
+*.so
+*.dylib
+*.tmp
+cloud-central
+e2e.*
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Configs
+config.yaml
+
+# generated docs
+docs
+default.etcd
+.minio.sys
+scripts/provider
+
+# debug
+__debug_bin
+dump.rdb

@@ -25,3 +25,10 @@ make init # (optional) for first build only
 make run
 ```
 
+## Indexing
+
+to make index on payload data
+
+```sql
+CREATE INDEX eventpayload ON event_models USING GIN (payload jsonb_path_ops);
+```

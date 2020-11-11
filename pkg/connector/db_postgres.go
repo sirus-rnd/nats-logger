@@ -14,6 +14,8 @@ type PostgresConfig struct {
 	Host     string `mapstructure:"host"`
 	Port     int    `mapstructure:"port"`
 	Database string `mapstructure:"database"`
+	SSLMode  string `mapstructure:"ssl_mode"`
+	SSLCA    string `mapstructure:"ssl_ca"`
 }
 
 // DefaultPostgresConfig is default postgres config
@@ -23,6 +25,8 @@ var DefaultPostgresConfig = &PostgresConfig{
 	Host:     "localhost",
 	Port:     5432,
 	Database: "nats-logger",
+	SSLMode:  "disable",
+	SSLCA:    "",
 }
 
 // ConnectToPostgres will create connection instance to postgre instance
@@ -30,9 +34,10 @@ var DefaultPostgresConfig = &PostgresConfig{
 func ConnectToPostgres(conf *PostgresConfig, models []interface{}) (*gorm.DB, error) {
 	db, err := gorm.Open(
 		"postgres",
+		// for full parameters check https://www.postgresql.org/docs/11/libpq-connect.html#LIBPQ-PARAMKEYWORDS
 		fmt.Sprintf(
-			"host=%s port=%d user=%s dbname=%s password=%s sslmode=disable",
-			conf.Host, conf.Port, conf.User, conf.Database, conf.Password,
+			"host=%s port=%d user=%s dbname=%s password=%s sslmode=%s sslrootcert=%s",
+			conf.Host, conf.Port, conf.User, conf.Database, conf.Password, conf.SSLMode, conf.SSLCA,
 		),
 	)
 	if err != nil {

@@ -39,3 +39,7 @@ scripts/provider
 # debug
 __debug_bin
 dump.rdb
+
+# credentials
+*.key
+*.crt
